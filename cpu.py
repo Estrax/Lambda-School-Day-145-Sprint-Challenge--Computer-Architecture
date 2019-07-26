@@ -41,7 +41,8 @@ class CPU:
         0b10101010: 'OR',
         0b10101011: 'XOR',
         0b10101100: 'SHL',
-        0b10101101: 'SHR'
+        0b10101101: 'SHR',
+        0b10101111: 'ADDI'
     }
 
     def __init__(self):
@@ -98,7 +99,8 @@ class CPU:
             'OR': self.exec_or,
             'XOR': self.exec_xor,
             'SHL': self.exec_shl,
-            'SHR': self.exec_shr
+            'SHR': self.exec_shr,
+            'ADDI': self.exec_addi
         }
 
     def exec_nop(self):
@@ -246,6 +248,9 @@ class CPU:
     def exec_shr(self, a, b):
         self.alu('SHR', a, b)
 
+    def exec_addi(self, a, b):
+        self.alu('ADDI', a, b)
+
     def ram_read(self, address):
         return self.ram[address]
 
@@ -271,6 +276,8 @@ class CPU:
 
         if op == 'ADD':
             self.reg[reg_a] += self.reg[reg_b]
+        elif op == 'ADDI':
+            self.reg[reg_a] += reg_b
         elif op == 'SUB':
             self.reg[reg_a] -= self.reg[reg_b]
         elif op == 'MUL':
